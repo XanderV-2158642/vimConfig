@@ -26,7 +26,6 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
-                "rust_analyzer",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -91,7 +90,7 @@ return {
         })
 
         vim.diagnostic.config({
-            -- update_in_insert = true,
+            --update_in_insert = true,
             float = {
                 focusable = false,
                 style = "minimal",
@@ -101,5 +100,6 @@ return {
                 prefix = "",
             },
         })
+        vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { noremap = true, silent = true })
     end
 }

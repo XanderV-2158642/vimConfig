@@ -1,13 +1,8 @@
-return { "rose-pine/neovim", name = "rose-pine", lazy = true,
+return { "sainnhe/gruvbox-material",
+    lazy = false,
+    priority = 1000,
 	config = function()
-		require("rose-pine").setup({
-			variant = "main",
-			dark_varient = "moon",
-			styles = {
-				bold = true,
-				italic = false,
-				transparency = false,
-			}
-		})
+	    vim.g.gruvbox_material_enable_italic=true
+        vim.cmd.colorscheme('gruvbox-material')
 	end
 }
