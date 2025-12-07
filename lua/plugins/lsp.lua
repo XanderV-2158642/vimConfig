@@ -26,6 +26,7 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
+                "ts_ls",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -64,6 +65,21 @@ return {
                         }
                     }
                 end,
+                ["ts_ls"] = function()
+                    require("lspconfig").ts_ls.setup({
+                        capabilities = capabilities,
+                        filetypes = { "typescript", "typescriptreact", "typescript.tsx", "javascript", "javascriptreact" },
+                        -- optionally disable tsserver formatting if you use prettier
+                        on_attach = function(client, bufnr)
+                            client.server_capabilities.documentFormattingProvider = false
+                        end,
+                    })
+                end,
+                ["clangd"] = function()
+                    require("lspconfig").clangd.setup({
+                        cmd = { "clangd", "--background-index" },
+                    })
+                end,
             }
         })
 
@@ -101,5 +117,6 @@ return {
             },
         })
         vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { noremap = true, silent = true })
+
     end
 }
