@@ -9,9 +9,9 @@ return {
     config = function()
         require('bufferline').setup {
             options = {
-                mode = 'buffers',      -- set to "tabs" to only show tabpages instead
-                themable = true,       -- allows highlight groups to be overriden i.e. sets highlights as default
-                numbers = 'none',      -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
+                mode = 'buffers',              -- set to "tabs" to only show tabpages instead
+                themable = true,               -- allows highlight groups to be overriden i.e. sets highlights as default
+                numbers = 'none',              -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
                 close_command = 'Bdelete! %d', -- can be a string | function, see "Mouse actions"
                 buffer_close_icon = '✗',
                 close_icon = '✗',
@@ -61,8 +61,15 @@ return {
     end,
 
     -- For conciseness
-    vim.keymap.set('n', '<Tab>', ':bnext<CR>', opts),
+    vim.keymap.set("n", "<Tab>", function()
+        if vim.bo.filetype == "neo-tree" then
+            -- Move focus to the next window instead of loading buffer
+            vim.cmd("wincmd l")
+        else
+            vim.cmd("bnext")
+        end
+    end, { noremap = true, silent = true }),
     vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', opts),
-    vim.keymap.set('n', '<leader>x', ':bdelete!<CR>', opts), -- close buffer
+    vim.keymap.set('n', '<leader>x', ':bp|bd! #<CR>', opts),   -- close buffer
     vim.keymap.set('n', '<leader>b', '<cmd> enew <CR>', opts), -- new buffer
 }
