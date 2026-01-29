@@ -116,7 +116,9 @@ return {
                 prefix = "",
             },
         })
+
         vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, { noremap = true, silent = true })
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
 
     end
 }
